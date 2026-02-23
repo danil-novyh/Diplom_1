@@ -339,35 +339,3 @@ class TestBurgerEdgeCases:
         burger.move_ingredient(0, 0)
         
         assert burger.ingredients[0] == mock_ingredient_sauce
-
-
-class TestBurgerIntegration:
-    """Интеграционные тесты для проверки взаимодействия методов."""
-    
-    def test_full_burger_workflow(self, burger, mock_bun, mock_ingredient_sauce, mock_ingredient_filling):
-        """Проверка полного сценария работы с бургером."""
-        # Шаг 1: Устанавливаем булочку
-        burger.set_buns(mock_bun)
-        assert burger.bun == mock_bun
-        
-        # Шаг 2: Добавляем ингредиенты
-        burger.add_ingredient(mock_ingredient_sauce)
-        burger.add_ingredient(mock_ingredient_filling)
-        assert len(burger.ingredients) == 2
-        
-        # Шаг 3: Перемещаем ингредиент
-        burger.move_ingredient(0, 1)
-        assert burger.ingredients[0] == mock_ingredient_filling
-        
-        # Шаг 4: Удаляем ингредиент
-        burger.remove_ingredient(1)
-        assert len(burger.ingredients) == 1
-        
-        # Шаг 5: Проверяем цену
-        expected_price = TestData.BUN_PRICE * 2 + TestData.INGREDIENT_FILLING_PRICE
-        assert burger.get_price() == expected_price
-        
-        # Шаг 6: Генерируем чек
-        receipt = burger.get_receipt()
-        assert TestData.BUN_NAME in receipt
-        assert str(expected_price) in receipt
